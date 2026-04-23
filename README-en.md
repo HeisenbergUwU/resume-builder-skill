@@ -10,6 +10,17 @@ HTML version uses inline CSS + Base64 avatar. No dependencies. Opens in browser,
 
 ### Install
 
+**🚀 Hermes:**
+```bash
+git clone https://github.com/HeisenbergUwU/resume-builder-skill.git ~/.hermes/skills/resume-builder
+```
+
+**🦞 OpenClaw:**
+```bash
+git clone https://github.com/HeisenbergUwU/resume-builder-skill.git ~/.openclaw/skills/resume-builder
+```
+
+**💻 Cursor / Claude Code / Generic:**
 ```bash
 git clone https://github.com/HeisenbergUwU/resume-builder-skill.git skills/resume-builder
 ```
