@@ -1,15 +1,15 @@
 :root {
   --bg: #f5f5f7;
-  --surface: #ffffff;
-  --card: #ffffff;
-  --border: #d5d5da;
-  --text: #1d1d1f;
+  --surface: #fafafa;
+  --card: #fafafa;
+  --border: #e0e0e3;
+  --dark: #3a3a3c;
+  --text: #3a3a3c;
   --text-secondary: #86868b;
-  --accent: #1d1d1f;
-  --blue: #0071e3;
-  --blue-hover: #0077ed;
-  --green: #34a853;
-  --orange: #ff9500;
+  --blue: #4a8bd4;
+  --blue-light: #6baee6;
+  --green: #5ab07a;
+  --orange: #e0a070;
   --radius: 18px;
 }
 
@@ -17,10 +17,10 @@
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display',
-    'SF Pro Text', 'Helvetica Neue', 'Noto Sans SC', sans-serif;
+    'SF Pro Text', 'Inter', 'Helvetica Neue', 'Noto Sans SC', sans-serif;
   background: var(--bg);
   color: var(--text);
-  line-height: 1.7;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -28,103 +28,119 @@ body {
 .container {
   max-width: 860px;
   margin: 0 auto;
-  padding: 60px 40px 80px;
+  padding: 0 40px 80px;
 }
 
-/* === Header === */
+/* === Dark Hero Header — Apple nav bar inspired === */
 .header {
-  margin-bottom: 50px;
-  padding-bottom: 40px;
-  border-bottom: 1px solid var(--border);
-}
-
-.header h1 {
-  font-size: 2.8rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--text);
-  margin-bottom: 8px;
+  background: rgba(29, 29, 31, 0.95);
+  border-radius: 0 0 var(--radius) var(--radius);
+  padding: 48px 40px 40px;
+  margin: 0 -40px 48px;
+  text-align: center;
 }
 
 .header-top {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 24px;
-  margin-bottom: 16px;
+  gap: 20px;
 }
 
 .avatar {
-  width: 100px;
-  height: 100px;
+  width: 96px;
+  height: 96px;
   border-radius: 50%;
   object-fit: cover;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-  flex-shrink: 0;
+  border: 3px solid rgba(255, 255, 255, 0.2);
 }
 
 .header-info {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  text-align: left;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
 }
 
-.header-info h1 { margin: 0; font-size: 2rem; }
+.header h1 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #f5f5f7;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.header-info .subtitle {
+  font-size: 1.1rem;
+  color: #86868b;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
 
 .contacts {
   display: flex;
   gap: 24px;
-  margin-top: 4px;
   flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 4px;
 }
 
 .contacts a {
-  color: var(--blue);
+  color: var(--blue-light);
   text-decoration: none;
-  font-size: 0.9rem;
-  transition: color 0.2s;
+  font-size: 0.88rem;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  transition: opacity 0.2s;
 }
 
-.contacts a:hover { color: var(--blue-hover); }
+.contacts a:hover { opacity: 0.8; }
 
 .tag-row {
   display: flex;
   gap: 10px;
-  margin-top: 12px;
+  margin-top: 16px;
+  justify-content: center;
   flex-wrap: wrap;
 }
 
 .tag {
-  background: rgba(0, 113, 227, 0.08);
-  color: var(--blue);
-  padding: 5px 16px;
+  background: rgba(41, 151, 255, 0.12);
+  color: var(--blue-light);
+  padding: 5px 18px;
   border-radius: 100px;
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   font-weight: 500;
+  letter-spacing: 0.02em;
 }
 
-/* === Cards === */
-.section { margin-bottom: 48px; }
+/* === Section Titles — hero style === */
+.section { margin-bottom: 40px; }
 
 .section-title {
-  font-size: 1.6rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
   margin-bottom: 20px;
   color: var(--text);
+  line-height: 1.2;
 }
 
+/* === Cards — Apple product page style === */
 .job-card, .skill-card, .paper-card {
   background: var(--surface);
   border-radius: var(--radius);
   padding: 28px 32px;
   margin-bottom: 16px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-  transition: box-shadow 0.3s;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  transition: box-shadow 0.3s, transform 0.3s;
 }
 
 .job-card:hover, .skill-card:hover {
-  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
 }
 
 /* === Work Experience === */
@@ -137,12 +153,23 @@ body {
   gap: 8px;
 }
 
-.job-company { font-size: 1.2rem; font-weight: 600; color: var(--text); }
-.job-role { color: var(--text-secondary); font-weight: 500; font-size: 0.95rem; }
+.job-company {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+.job-role {
+  color: var(--text-secondary);
+  font-weight: 400;
+  font-size: 0.92rem;
+  margin-top: 2px;
+}
 
 .job-period {
   color: var(--text-secondary);
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   background: var(--bg);
   padding: 4px 14px;
   border-radius: 100px;
@@ -150,136 +177,187 @@ body {
   font-weight: 500;
 }
 
+.job-desc {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
 .job-group-title {
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 600;
   margin-bottom: 6px;
   color: var(--text);
 }
 
+.job-group ul {
+  list-style: none;
+  padding-left: 0;
+}
+
 .job-group li {
   position: relative;
-  padding-left: 16px;
+  padding-left: 18px;
   margin-bottom: 5px;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   color: var(--text-secondary);
   line-height: 1.6;
 }
 
 .job-group li::before {
-  content: '\2022';
+  content: '';
   position: absolute;
   left: 0;
-  color: #d2d2d7;
-  font-size: 1.2em;
-  line-height: 1.3;
+  top: 10px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--border);
 }
 
-.highlight { color: var(--text); font-weight: 500; }
+.highlight { color: var(--text); font-weight: 600; }
 .metric { color: var(--green); font-weight: 600; }
-.link { color: var(--blue); text-decoration: none; }
+
+/* === Links with Apple chevron === */
+.link {
+  color: var(--blue);
+  text-decoration: none;
+  font-weight: 400;
+}
+
 .link:hover { text-decoration: underline; }
 
-/* === Skills Grid === */
+/* === Skills Grid — 2-column Apple product grid === */
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.skill-card {
+  padding: 22px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .skill-card .label {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: var(--blue);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-weight: 600;
-  margin-bottom: 6px;
 }
 
 .skill-card .value {
-  font-size: 0.88rem;
+  font-size: 0.92rem;
   color: var(--text);
+  font-weight: 500;
 }
 
 /* === Education Table === */
 .edu-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   background: var(--surface);
   border-radius: var(--radius);
   overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
 }
 
 .edu-table th {
   background: var(--bg);
-  padding: 12px 20px;
+  padding: 14px 20px;
   text-align: left;
-  font-size: 0.8rem;
+  font-size: 0.72rem;
   color: var(--text-secondary);
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
+  border-bottom: 1px solid var(--border);
 }
 
 .edu-table td {
   padding: 14px 20px;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   border-top: 1px solid var(--border);
   color: var(--text);
+  font-weight: 400;
+}
+
+.edu-table tr:hover td {
+  background: rgba(0, 113, 227, 0.02);
 }
 
 /* === Papers === */
-.paper-title { font-weight: 600; margin-bottom: 6px; color: var(--text); }
-.paper-conf { color: var(--orange); font-size: 0.85rem; font-weight: 500; margin-bottom: 8px; }
+.paper-title {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.paper-conf {
+  color: var(--orange);
+  font-size: 0.82rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
 .paper-cite {
   font-size: 0.82rem;
   color: var(--text-secondary);
   font-style: italic;
   line-height: 1.5;
   border-left: 2px solid var(--border);
-  padding-left: 12px;
+  padding-left: 14px;
   margin-top: 10px;
 }
 
-/* === Footer === */
+/* === Footer — Apple style light gray bar === */
 .footer {
   text-align: center;
-  padding-top: 32px;
+  padding: 24px 40px;
+  margin: 40px -40px 0;
+  background: var(--bg);
   border-top: 1px solid var(--border);
   color: var(--text-secondary);
-  font-size: 0.8rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
 }
 
 /* === Print === */
 @media print {
-  body { background: #fff; color: #111; }
-  .job-card, .skill-card, .paper-card {
-    border: 1px solid #ddd;
-    background: #fff;
-    box-shadow: none;
+  body { background: #fff; }
+  .header {
+    background: var(--dark) !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
-  .header h1 { color: #111 !important; }
+  .job-card, .skill-card, .paper-card {
+    box-shadow: none;
+    border: 1px solid var(--border);
+  }
+  .edu-table { border: 1px solid var(--border); }
 }
 
 /* === Responsive === */
 @media (max-width: 640px) {
-  .container { padding: 30px 20px 50px; }
+  .container { padding: 0 20px 50px; }
+  .header {
+    margin: 0 -20px 32px;
+    padding: 36px 24px 28px;
+    border-radius: 0 0 12px 12px;
+  }
+  .header h1 { font-size: 2rem; }
+  .section-title { font-size: 1.5rem; }
   .job-card { padding: 20px; }
   .job-header { flex-direction: column; }
-  .header-top {
-    flex-direction: column;
-    align-items: center !important;
-    gap: 12px;
-  }
-  .header-info {
-    align-items: center !important;
-    text-align: center !important;
-  }
-  .header-info .contacts {
-    justify-content: center !important;
-    flex-direction: column !important;
-    align-items: center !important;
-  }
-  .tag-row { justify-content: center !important; }
+  .header-top { flex-direction: column; gap: 14px; }
+  .contacts { flex-direction: column; align-items: center; gap: 10px; }
+  .tag-row { justify-content: center; }
+  .skills-grid { grid-template-columns: 1fr; }
+  .footer { margin: 32px -20px 0; }
 }

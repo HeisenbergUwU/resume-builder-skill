@@ -1,18 +1,19 @@
 :root {
-  --bg: #eaecee;
-  --surface: #ffffff;
-  --card: #ffffff;
-  --border: #c8ccd4;
-  --text: #24292e;
-  --text-secondary: #586069;
-  --accent: #0366d6;
-  --blue: #0366d6;
-  --blue-hover: #0256b9;
-  --green: #28a745;
-  --orange: #d73a49;
-  --radius: 4px;
-  --navy: #2c3e50;
-  --navy-light: #34495e;
+  --bg: #eeefef;
+  --surface: #fafafa;
+  --card: #fafafa;
+  --border: #d4d6db;
+  --text: #444c56;
+  --text-secondary: #717882;
+  --accent: #d4956a;
+  --blue: #d4956a;
+  --blue-hover: #c4855a;
+  --green: #5aad74;
+  --orange: #c47a84;
+  --radius: 3px;
+  --navy: #7e8084;
+  --navy-light: #8e9094;
+  --softcol: #e8e8e8;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -35,17 +36,16 @@ body {
   background: var(--navy);
   color: #ffffff;
   margin-bottom: 0;
-  padding-bottom: 0;
-  border-bottom: none;
-  padding: 48px 48px 40px;
+  padding: 40px 48px 36px;
 }
 
 .header h1 {
-  font-size: 2.2rem;
+  font-size: 2.4rem;
   font-weight: 700;
-  letter-spacing: 0;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
   color: #ffffff;
-  margin-bottom: 8px;
+  margin-bottom: 0;
 }
 
 .header-top {
@@ -60,7 +60,7 @@ body {
   height: 96px;
   border-radius: var(--radius);
   object-fit: cover;
-  border: 3px solid rgba(255,255,255,0.3);
+  border: 3px solid var(--accent);
   flex-shrink: 0;
 }
 
@@ -71,11 +71,20 @@ body {
   text-align: left;
 }
 
-.header-info h1 { margin: 0; font-size: 2rem; color: #ffffff; }
+.header-info h1 { margin: 0; font-size: 2.2rem; color: #ffffff; }
+
+.header-divider {
+  display: inline-block;
+  width: 3px;
+  height: 1.2em;
+  background: var(--accent);
+  margin: 0 8px;
+  vertical-align: middle;
+}
 
 .contacts {
   display: flex;
-  gap: 20px;
+  gap: 16px;
   margin-top: 4px;
   flex-wrap: wrap;
 }
@@ -88,6 +97,12 @@ body {
 
 .contacts a:hover { color: #ffffff; }
 
+.contacts a::before {
+  content: '▸';
+  color: var(--accent);
+  margin-right: 4px;
+}
+
 .tag-row {
   display: flex;
   gap: 8px;
@@ -96,39 +111,68 @@ body {
 }
 
 .tag {
-  background: rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.9);
-  padding: 4px 14px;
+  background: var(--accent);
+  color: #ffffff;
+  padding: 3px 12px;
   border-radius: var(--radius);
   font-size: 0.75rem;
   font-weight: 600;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.03em;
 }
 
-/* === Cards === */
+/* === Section Bars (LaTeXCV Modern Style) === */
 .section {
-  margin-bottom: 32px;
+  margin-bottom: 0;
   padding: 0 48px;
 }
 
 .section-title {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  margin-bottom: 16px;
-  color: var(--navy);
-  padding-top: 20px;
-  border-top: 2px solid var(--border);
+  margin-bottom: 0;
+  color: #ffffff;
+  padding: 8px 16px;
+  background: var(--accent);
+  margin: 20px 0 0 0;
+  position: relative;
 }
 
+.section-title::before {
+  content: '';
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 6px 0 6px 8px;
+  border-color: transparent transparent transparent var(--navy);
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+/* === Cards === */
 .job-card, .skill-card, .paper-card {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 20px 24px;
-  margin-bottom: 12px;
+  padding: 16px 24px;
+  margin-bottom: 8px;
   box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+}
+
+.section .job-card:first-of-type,
+.section .skill-card:first-of-type,
+.section .edu-table:first-of-type {
+  margin-top: 12px;
+}
+
+/* === Horizontal Rule (LaTeXCV Style) === */
+.section-rule {
+  border: none;
+  height: 1px;
+  background: var(--softcol);
+  margin: 4px 0 12px 0;
 }
 
 /* === Work Experience === */
@@ -136,72 +180,87 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 10px;
+  margin-bottom: 4px;
   flex-wrap: wrap;
   gap: 8px;
 }
 
-.job-company { font-size: 1.1rem; font-weight: 700; color: var(--navy); }
-.job-role { color: var(--text-secondary); font-weight: 500; font-size: 0.9rem; }
+.job-company { font-size: 1.05rem; font-weight: 700; color: var(--text); }
+.job-role { color: var(--text-secondary); font-weight: 500; font-size: 0.88rem; }
+.job-company-separator { color: var(--navy); margin: 0 6px; }
+.job-institution { color: var(--accent); font-weight: 600; font-size: 0.9rem; }
 
 .job-period {
-  color: #ffffff;
-  font-size: 0.8rem;
-  background: var(--navy-light);
-  padding: 3px 12px;
-  border-radius: var(--radius);
+  color: var(--accent);
+  font-size: 0.82rem;
+  font-weight: 700;
   white-space: nowrap;
-  font-weight: 600;
+}
+
+.job-desc {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  margin: 4px 0 8px 0;
 }
 
 .job-group-title {
   font-size: 0.88rem;
   font-weight: 600;
-  margin-bottom: 6px;
-  color: var(--navy);
+  margin-bottom: 4px;
+  color: var(--text);
+}
+
+.job-group ul {
+  list-style: none;
+  padding-left: 0;
 }
 
 .job-group li {
   position: relative;
-  padding-left: 14px;
-  margin-bottom: 4px;
+  padding-left: 18px;
+  margin-bottom: 3px;
   font-size: 0.88rem;
   color: var(--text-secondary);
   line-height: 1.55;
 }
 
 .job-group li::before {
-  content: '\2022';
+  content: '';
   position: absolute;
   left: 0;
-  color: var(--blue);
-  font-weight: 700;
+  top: 6px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 5px 0 5px 7px;
+  border-color: transparent transparent transparent var(--navy);
 }
 
 .highlight { color: var(--text); font-weight: 600; }
 .metric { color: var(--green); font-weight: 700; }
-.link { color: var(--blue); text-decoration: none; }
+.link { color: var(--accent); text-decoration: none; font-weight: 600; }
 .link:hover { text-decoration: underline; }
 
 /* === Skills Grid === */
 .skills-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 10px;
+  gap: 8px;
 }
 
 .skill-card {
-  border-top: 3px solid var(--blue);
+  border-top: 3px solid var(--accent);
   box-shadow: none;
+  padding: 12px 20px;
 }
 
 .skill-card .label {
   font-size: 0.72rem;
-  color: var(--blue);
+  color: var(--accent);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-weight: 700;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 
 .skill-card .value {
@@ -221,7 +280,7 @@ body {
 
 .edu-table th {
   background: var(--navy);
-  padding: 10px 16px;
+  padding: 8px 16px;
   text-align: left;
   font-size: 0.75rem;
   color: #ffffff;
@@ -231,21 +290,21 @@ body {
 }
 
 .edu-table td {
-  padding: 12px 16px;
+  padding: 10px 16px;
   font-size: 0.88rem;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--softcol);
   color: var(--text-secondary);
 }
 
 /* === Papers === */
-.paper-title { font-weight: 700; margin-bottom: 4px; color: var(--navy); }
-.paper-conf { color: var(--blue); font-size: 0.82rem; font-weight: 600; margin-bottom: 6px; }
+.paper-title { font-weight: 700; margin-bottom: 4px; color: var(--text); }
+.paper-conf { color: var(--accent); font-size: 0.82rem; font-weight: 600; margin-bottom: 6px; }
 .paper-cite {
   font-size: 0.82rem;
   color: var(--text-secondary);
   font-style: italic;
   line-height: 1.5;
-  border-left: 3px solid var(--border);
+  border-left: 3px solid var(--softcol);
   padding-left: 12px;
   margin-top: 8px;
 }
@@ -253,22 +312,33 @@ body {
 /* === Footer === */
 .footer {
   text-align: center;
-  padding: 24px 48px;
+  padding: 12px 48px;
   background: var(--navy);
-  color: rgba(255,255,255,0.6);
-  font-size: 0.75rem;
+  color: rgba(255,255,255,0.7);
+  font-size: 0.78rem;
+  margin-top: 0;
+}
+
+.footer a {
+  color: var(--accent);
+  text-decoration: none;
 }
 
 /* === Print === */
 @media print {
   body { background: #fff; }
-  .header { background: #fff !important; color: #111 !important; border-bottom: 2px solid #111; }
-  .header h1, .header-info h1, .contacts a { color: #111 !important; }
-  .tag { background: #eee !important; color: #333 !important; border: 1px solid #ccc; }
+  .header { background: #fff !important; color: #444 !important; border-bottom: 2px solid #ccc; }
+  .header h1, .header-info h1, .contacts a { color: #444 !important; }
+  .contacts a::before { color: #444 !important; }
+  .avatar { border-color: #999 !important; }
+  .tag { background: #eee !important; color: #555 !important; border: 1px solid #ddd; }
+  .section-title { background: #eee !important; color: #555 !important; }
+  .section-title::before { border-color: transparent transparent transparent #555 !important; }
   .job-card, .skill-card { border: 1px solid #ddd; box-shadow: none; }
-  .job-period { background: #eee !important; color: #333 !important; }
-  .edu-table th { background: #eee !important; color: #333 !important; }
-  .footer { background: #fff !important; color: #999 !important; }
+  .job-period { color: #555 !important; }
+  .edu-table th { background: #eee !important; color: #555 !important; }
+  .job-group li::before { border-color: transparent transparent transparent #555 !important; }
+  .footer { background: #fff !important; color: #aaa !important; }
 }
 
 /* === Responsive === */

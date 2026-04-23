@@ -2,43 +2,91 @@
 
 [中文版](README.md)
 
-**Build a polished resume from your materials (email reports, old resumes, photos etc.), outputting both HTML and Markdown versions.**
+Got a pile of weekly reports, emails, class notes, old resumes, and photos lying around?
 
-HTML version uses inline CSS + Base64 avatar. No dependencies. Opens in browser, email-safe, print-ready.
+Install this skill, dump your materials into the chat, and let the agent handle the rest. For students, class notes, lab reports, and project docs can be turned into skills and project experience automatically.
+
+---
+
+### Preview
+
+<table>
+<tr>
+<td align="center">
+  <img src="previews/apple.png" width="280"><br><br><b>Apple</b> — Dark hero header, large typography, card grid, blue links
+</td>
+<td align="center">
+  <img src="previews/minimal.png" width="280"><br><br><b>Minimal</b> — Centered layout, bottom dividers, left-border accents
+</td>
+</tr>
+<tr>
+<td align="center">
+  <img src="previews/corporate.png" width="280"><br><br><b>Corporate</b> — Orange accent, colored section bars, arrow bullets
+</td>
+<td align="center">
+  <img src="previews/pulse.png" width="280"><br><br><b>Pulse</b> — Dark/light alternating sections, skill bars, animated glow
+</td>
+</tr>
+</table>
 
 ---
 
 ### Install
 
+Pick your tool:
+
+**🚀 Hermes:**
 ```bash
-git clone <repo-url> skills/resume-builder
+git clone https://github.com/HeisenbergUwU/resume-builder-skill.git ~/.hermes/skills/resume-builder
 ```
 
-### Prompt Examples
+**🦞 OpenClaw:**
+```bash
+git clone https://github.com/HeisenbergUwU/resume-builder-skill.git ~/.openclaw/skills/resume-builder
+```
 
-After installing, use in conversation:
+**💻 Cursor / Claude Code / Generic:**
+```bash
+git clone https://github.com/HeisenbergUwU/resume-builder-skill.git skills/resume-builder
+```
 
-**Generate a resume from your materials:**
-> Build a resume from my materials, output both HTML and Markdown
-> Turn these documents into a resume for me
+---
 
-**Tech roles:**
-> Extract my weekly reports into a resume for backend developer, apple style
+### How to Use
 
-**HR roles:**
-> Build me an HR resume from these materials, highlight recruitment and employee relations, corporate style
+Just start chatting:
 
-**Marketing roles:**
-> I have scattered emails and docs, build a growth marketing resume, minimal style
+> Turn these weekly reports and emails into a resume
+>
+> Extract skills and build a student resume from my class notes and lab reports
 
-**Multi-language:**
-> Translate the resume above into Chinese
+Once it's generated, you can iterate:
 
-### Features
+> Switch to corporate style, make it more professional
+>
+> Make the colors more vibrant
+>
+> Translate to Chinese
+>
+> Export as PDF
+
+That's it.
+
+---
+
+### What It Does
 
 | Feature | Description |
 |---------|-------------|
-| Multi-source | .eml / .msg / .html / .txt / .md / .jpg / .png |
+| Multi-source | .eml / .msg / .html / .txt / .md / .jpg / .png — all supported |
+| Student-friendly | Class notes, lab reports, and project docs auto-extracted into skills and experience |
 | Career Guides | Computer Science · Human Resources · Marketing |
-| Style Themes | apple · minimal · corporate |
-| Avatar | Auto-select + center-crop + Base64 embed |
+| Style Themes | apple · minimal · corporate · pulse |
+| Avatar | Auto-discover, center-crop, Base64 embed |
+| Multi-format | HTML + Markdown + PDF |
+
+---
+
+### Custom Styles
+
+Four built-in themes not enough? Drop your own under `assets/styles/` and PR it back.

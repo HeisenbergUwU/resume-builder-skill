@@ -1,122 +1,73 @@
-# Technical Resume Writing Guide
+# Resume Writing Guide — Computer Science (English)
 
-## Core Principles
+## Key Metrics to Emphasize
 
-### FAB Pattern
+| Area | What to quantify |
+|------|-----------------|
+| Scale | Users served, data volume (GB/TB), API QPS, number of services |
+| Performance | Latency reduction (ms), throughput increase (%), model speedup (x) |
+| Team | Team size managed, interns supervised, cross-team projects led |
+| Impact | Revenue generated, cost saved, systems migrated, bugs fixed |
+| Models | Parameter count, benchmark scores, SOTA results, conference publications |
 
-Each experience bullet should answer three questions:
+## Per-Role Focus Areas
 
-| | Meaning | Example |
-|---|---|---|
-| **F**eature | What you did | "Designed a Redis-cached user system" |
-| **A**dvantage | Why it's good | "Response time dropped from 800ms to 80ms" |
-| **B**enefit | Business value | "Supported 20M daily page views, reduced servers from 15 to 4" |
+### Backend Engineer
+- Microservices architecture, API design, database optimization
+- High availability: SLA percentages, uptime, fault tolerance
+- Distributed systems: message queues, caching, load balancing
+- CI/CD pipelines, deployment automation
 
-Listing facts alone isn't convincing. Provide evidence, let the recruiter draw the conclusion. When there's no quantifiable achievement, talk about growth: what problem you faced → how you solved it → why your approach was better → the outcome.
+### Frontend Engineer
+- Framework mastery (React/Vue/Angular), performance optimization
+- Lighthouse scores, bundle size reduction, render time improvements
+- Design system implementation, component libraries
+- Cross-browser/device compatibility
 
-### Quantification
+### AI / ML Engineer
+- Model architecture (transformers, CNNs, diffusion)
+- Training data scale, SFT/pretraining pipeline, fine-tuning methods (LoRA, QLoRA)
+- Benchmark improvements (accuracy, F1, BLEU, ROUGE)
+- Production deployment: vLLM, TensorRT, ONNX, model quantization
+- Agent workflows: RAG, tool use, multi-agent coordination
 
-| Weak | Strong |
-|---|---|
-| "Significantly improved performance" | "P99 latency reduced from 1200ms to 200ms" |
-| "Handled large user base" | "3.5M DAU, peak QPS 80K" |
-| "Managed a team" | "6-person team, built XX platform from scratch" |
+### DevOps / Platform Engineer
+- Infrastructure scale: node count, cluster management, GPU orchestration
+- CI/CD: build times, deployment frequency, rollback procedures
+- Monitoring: observability stack, alerting, incident response time
+- Cost optimization: cloud spend reduction, resource utilization
 
----
+### Full-Stack Developer
+- End-to-end ownership: requirement to deployment
+- Full tech stack breadth with measurable depth in one area
+- Cross-functional collaboration, product ownership
 
-## Resume Structure (Reverse Chronological)
+## ATS Keywords (Common)
 
-```
-Contact Info (phone / email / GitHub / blog)
-Personal Info (name, education, years of experience, target role)
-Work Experience (grouped by company → by project within company)
-Technical Skills
-Open Source / Technical Articles / Talks (only if notable)
-```
+Java, Python, C++, Go, TypeScript, JavaScript, React, Vue, Node.js, Spring, Spring Cloud, FastAPI, Django, Flask, Kubernetes, Docker, AWS, GCP, Azure, MySQL, PostgreSQL, Redis, MongoDB, Elasticsearch, Kafka, RabbitMQ, PyTorch, TensorFlow, LLM, Agent, RAG, NLP, Computer Vision, CI/CD, Git, Agile, REST API, GraphQL, gRPC, Microservices, System Design, Data Structures, Algorithms
 
-**Per-project template:**
+## Before → After Writing Examples
 
-```
-[Project Name]
-Responsibilities: [your specific role in this project]
-Highlights: [unique contributions, technical rationale]
-Results: [metrics, benchmarks, business impact]
-```
+### Weak
+> "Responsible for developing backend services for the company's e-commerce platform."
 
-Write 2-3 core projects per company. If there are many, merge by category — pick one representative to detail, mention the rest briefly.
+### Strong
+> "Developed microservices for e-commerce platform serving **10K+ daily orders**. Built authentication service enabling **SSO across 90% of group systems**."
 
----
+### Weak
+> "Worked on AI model training and deployment."
 
-## Per-Stack Focus Areas
+### Strong
+> "Fine-tuned Qwen3 models (up to 235B params) using LoRA; deployed via vLLM on K8s cluster. Improved paper parsing accuracy by **30%** on ACL benchmark."
 
-When writing work experience, emphasize dimensions relevant to your target role. Keywords in parentheses are high-frequency ATS terms — pick 5-10 that match your profile and weave them in naturally.
+### Weak
+> "Managed a small team."
 
-### Backend / Java
+### Strong
+> "Led **4-person team** (including interns) for HyperAI platform development. Established development paradigms (ORM → Pydantic → Service → Controller), reducing API iteration time by **40%**."
 
-**Emphasize:** High-concurrency design, microservice architecture, performance tuning (JVM/SQL), database design (sharding/replication), DDD
+### Weak
+> "Built web admin system."
 
-**Keywords:**
-Spring Boot, Spring Cloud, MyBatis, MySQL, Redis, Kafka, RabbitMQ, Elasticsearch, Docker, K8s, Netty, Zookeeper, Nginx, gRPC, RocketMQ, Prometheus, Sentinel, TiDB, ClickHouse, seata, Feign, Hystrix
-
-### Frontend / Web
-
-**Emphasize:** Framework depth (React/Vue internals), performance (FCP/Lighthouse/SSR), engineering (Webpack/Vite/CI/CD), cross-platform (RN/Flutter/mini-programs)
-
-**Keywords:**
-React, Vue, Next.js, Nuxt, TypeScript, JavaScript, HTML5, CSS3, Sass/Less, Webpack, Vite, Node.js, WebSocket, GraphQL, Redux, Pinia, Tailwind CSS, Jest, Cypress, PWA, Flutter, Electron
-
-### Mobile / iOS
-
-**Emphasize:** System knowledge (RunLoop/GCD/Memory Management), performance (launch/memory/jank/binary size), networking (HTTP/2/weak network/Socket)
-
-**Keywords:**
-Swift, SwiftUI, UIKit, Combine, Core Data, Core Animation, AVFoundation, XCTest, Carthage, CocoaPods, SPM, Instruments, Crashlytics, Firebase, ARKit, MapKit, CloudKit
-
-### Mobile / Android
-
-**Emphasize:** System knowledge (Binder/Handler/Lifecycle), performance (ANR/memory leaks/launch/binary size), UI (Compose/Custom Views), architecture (MVVM/modularization)
-
-**Keywords:**
-Kotlin, Jetpack Compose, Room, WorkManager, Coroutines, Flow, Retrofit, OkHttp, Dagger Hilt, MVVM, Gradle, Profiler, LeakCanary, AndroidX, Material Design, ADB, FCM
-
-### C / C++
-
-**Emphasize:** Systems programming (memory management/multithreading/IPC), networking (Socket/epoll/gRPC), algorithms & data structures, build & debug (GCC/GDB/perf)
-
-**Keywords:**
-C++11/14/17/20, STL, Boost, Qt, OpenGL, Vulkan, FFmpeg, protobuf, gRPC, CMake, GDB, Valgrind, perf, eBPF, epoll, io_uring, pthread, lock-free, SIMD, AVX, ARM, GCC, Clang, LLVM
-
-### Go / Node.js
-
-**Emphasize:** High concurrency (goroutines/channels or Event Loop/async), microservices (gRPC/service discovery/circuit breaking), cloud-native (K8s/Service Mesh), observability
-
-**Keywords (Go):**
-Gin, gRPC, Protobuf, etcd, Consul, Kubernetes, Helm, Prometheus, OpenTelemetry, Kafka, Redis, TiDB, pprof, trace
-
-**Keywords (Node.js):**
-Express, Koa, Fastify, NestJS, Socket.io, TypeScript, Prisma, Jest, Next.js, Serverless, AWS Lambda, PM2
-
-### Architect / Tech Lead
-
-**Emphasize:** Technology selection & risk assessment, system design (HA/high-concurrency/scalability), team management (Code Review/mentorship/succession), cross-team collaboration
-
-**Keywords:**
-DDD, Microservices, Event Sourcing, CQRS, Saga, Service Mesh, Istio, K8s, Terraform, GitOps, ArgoCD, Prometheus, Grafana, ELK, OpenTelemetry, SLO, SLA, CAP, BASE, Distributed Transactions, Chaos Engineering, DR, Canary Release, Technical Debt, Architecture Governance
-
----
-
-## Contact Info Best Practices
-
-- **Phone:** Note area code for non-local numbers; include best contact hours if you often miss calls
-- **Email:** Gmail or Outlook preferred (some HR teams filter QQ/163 email)
-- **GitHub / Blog:** Original repos or quality technical articles significantly boost personal brand
-
----
-
-## ATS Strategy
-
-Your resume may pass through automated screening (ATS) or quick review by non-technical HR:
-
-1. Pick 5-10 keywords from your target stack that genuinely match your skills
-2. Weave keywords **naturally** into experience bullets — never dump them at the end
-3. File name: `Name-Role-YearsExperience.pdf` (never `.doc`, formatting breaks)
+### Strong
+> "Built and maintained WebAdmin CMS (wa-0.155+), supporting multi-tag filtering, series tutorial management, and dataset admin for **9,000+ academic papers**."
