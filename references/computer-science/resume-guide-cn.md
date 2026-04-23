@@ -1,122 +1,79 @@
-# 技术简历写作指南
+# 简历写作指南 — 计算机科学（中文）
 
-## 核心原则
+## 关键量化指标
 
-### FAB 模式
+| 维度 | 需要量化的内容 |
+|------|-------------|
+| 规模 | 用户量、数据量（GB/TB）、API QPS、服务节点数 |
+| 性能 | 延迟降低（ms）、吞吐量提升（%）、模型加速（x 倍） |
+| 团队 | 团队规模、管理实习生人数、跨团队项目数 |
+| 影响力 | 收入贡献、成本节省、系统迁移规模、修复的关键 bug 数 |
+| 模型 | 参数量、基准测试分数、SOTA 成果、论文发表 |
 
-每条经历都应回答三个问题：
+## 不同岗位的侧重点
 
-| | 含义 | 示例 |
-|---|---|---|
-| **F**eature | 做了什么 | "设计了基于 Redis 缓存的用户系统" |
-| **A**dvantage | 好在哪 | "响应时间从 800ms 降至 80ms" |
-| **B**enefit | 带来什么价值 | "支撑日均 2000 万 PV，服务器从 15 台缩至 4 台" |
+### 后端工程师
+- 微服务架构、API 设计、数据库优化
+- 高可用：SLA 百分比、可用性、容错机制
+- 分布式系统：消息队列、缓存、负载均衡
+- CI/CD 流水线、部署自动化
 
-只堆砌事实没有说服力。提供论据，把论点留给招聘方自己得出。讲不出成绩时讲成长：遇到了什么问题 → 怎么解决的 → 方案好在哪 → 最终效果。
+### 前端工程师
+- 框架精通（React/Vue/Angular）、性能优化
+- Lighthouse 评分、包体积缩减、渲染时间改善
+- 设计系统实现、组件库
+- 跨浏览器/设备兼容性
 
-### 量化
+### AI / 算法工程师
+- 模型架构（Transformer、CNN、扩散模型）
+- 训练数据规模、SFT/预训练管线、微调方法（LoRA、QLoRA）
+- 基准测试提升（准确率、F1、BLEU、ROUGE）
+- 生产部署：vLLM、TensorRT、ONNX、模型量化
+- Agent 工作流：RAG、工具调用、多 Agent 协同
 
-| 差 | 好 |
-|---|---|
-| "性能大幅提升" | "P99 从 1200ms 降至 200ms" |
-| "用户量很大" | "日活 350 万，峰值 QPS 8w" |
-| "管理了一个团队" | "6 人小组，从 0 到 1 搭建 XX 平台" |
+### 运维 / 平台工程师
+- 基础设施规模：节点数、集群管理、GPU 编排
+- CI/CD：构建时间、部署频率、回滚流程
+- 可观测性：监控栈、告警、故障响应时间
+- 成本优化：云支出缩减、资源利用率
 
----
+### 全栈工程师
+- 端到端负责：需求到部署
+- 全技术栈广度 + 某一领域深度
+- 跨职能协作、产品主导
 
-## 简历结构（逆序排列，最新在前）
+## ATS 关键词（常用）
 
-```
-联系方式（手机 / 邮箱 / GitHub / 博客）
-个人信息（姓名、学历、工作年限、期望职位）
-工作经历（按公司分组 → 公司内按项目分组）
-技能清单
-开源项目 / 技术文章 / 演讲（选有说服力的）
-```
+Java, Python, C++, Go, TypeScript, JavaScript, React, Vue, Node.js, Spring, Spring Cloud, FastAPI, Django, Flask, Kubernetes, Docker, AWS, GCP, Azure, MySQL, PostgreSQL, Redis, MongoDB, Elasticsearch, Kafka, RabbitMQ, PyTorch, TensorFlow, LLM, Agent, RAG, NLP, 计算机视觉, CI/CD, Git, Agile, REST API, GraphQL, gRPC, 微服务, 系统设计, 数据结构, 算法
 
-**每条项目经历模板：**
+## 写作示例 — 修改前 vs 修改后
 
-```
-[项目名]
-负责：[你在这个项目中具体负责的部分]
-亮点：[你的独特贡献，技术选型理由]
-成果：[量化指标，性能对比，业务影响]
-```
+### 弱
+> "负责公司电商平台的后端服务开发。"
 
-每家公司写 2-3 个核心项目即可。项目多则按类合并，每类选一个典型详写，其余一笔带过。
+### 强
+> "开发电商平台微服务，支撑 **日均 10,000+ 订单**。构建鉴权服务，实现集团 **90% 系统**单点登录（SSO）。"
 
----
+### 弱
+> "参与了 AI 模型训练和部署工作。"
 
-## 各技术栈侧重点
+### 强
+> "使用 LoRA 微调 Qwen3 系列模型（最高 235B 参数），vLLM 部署于 K8s 集群。在 ACL 基准上论文解析准确率提升 **30%**。"
 
-写工作经历时，根据目标岗位突出以下维度。括号中的是 JD 高频关键词，选 5-10 个与自己匹配的融入描述中。
+### 弱
+> "管理小团队。"
 
-### 后端 / Java
+### 强
+> "带领 **4 人团队**（含实习生）完成 HyperAI 资讯站开发。制定开发范式（ORM → Pydantic → Service → Controller），API 迭代效率提升 **40%**。"
 
-**突出：** 高并发设计、微服务拆分、性能优化（JVM/SQL）、数据库设计（分库分表/读写分离）、DDD 建模
+### 弱
+> "搭建了 WebAdmin 后台系统。"
 
-**高频关键词：**
-Spring Boot, Spring Cloud, MyBatis, MySQL, Redis, Kafka, RabbitMQ, Elasticsearch, Docker, K8s, Netty, Zookeeper, Nginx, gRPC, RocketMQ, Prometheus, Sentinel, TiDB, ClickHouse, seata, Feign, Hystrix
+### 强
+> "搭建并维护 WebAdmin CMS（wa-0.155+），支持多标签过滤、系列教程管理，管理 **9,000+ 学术论文**数据。"
 
-### 前端 / Web
+### 弱
+> "负责爬虫开发工作。"
 
-**突出：** 框架深度（React/Vue 原理）、性能优化（首屏/Lighthouse/SSR）、工程化（Webpack/Vite/CI/CD）、跨端（RN/Flutter/小程序）
-
-**高频关键词：**
-React, Vue, Next.js, Nuxt, TypeScript, JavaScript, HTML5, CSS3, Sass/Less, Webpack, Vite, Node.js, WebSocket, GraphQL, Redux, Pinia, Tailwind CSS, Jest, Cypress, PWA, 微信小程序, Flutter, Electron
-
-### 移动端 / iOS
-
-**突出：** 系统知识（RunLoop/GCD/Memory Management）、性能优化（启动/内存/卡顿/包体积）、网络（HTTP/2/弱网/Socket）
-
-**高频关键词：**
-Swift, SwiftUI, UIKit, Combine, Core Data, Core Animation, AVFoundation, XCTest, Carthage, CocoaPods, SPM, Instruments, Crashlytics, Firebase, ARKit, MapKit, CloudKit
-
-### 移动端 / Android
-
-**突出：** 系统知识（Binder/Handler/生命周期）、性能（ANR/内存泄漏/启动/包体积）、UI（Compose/自定义 View）、架构（MVVM/组件化）
-
-**高频关键词：**
-Kotlin, Jetpack Compose, Room, WorkManager, Coroutines, Flow, Retrofit, OkHttp, Dagger Hilt, MVVM, Gradle, Profiler, LeakCanary, AndroidX, Material Design, ADB, FCM
-
-### C / C++
-
-**突出：** 系统编程（内存管理/多线程/进程通信）、网络（Socket/epoll/gRPC）、算法数据结构、编译调试（GCC/GDB/perf）
-
-**高频关键词：**
-C++11/14/17/20, STL, Boost, Qt, OpenGL, Vulkan, FFmpeg, protobuf, gRPC, CMake, GDB, Valgrind, perf, eBPF, epoll, io_uring, pthread, lock-free, SIMD, AVX, ARM, GCC, Clang, LLVM
-
-### Go / Node.js
-
-**突出：** 高并发（goroutine/channel 或 Event Loop/async）、微服务（gRPC/服务发现/熔断）、云原生（K8s/Service Mesh）、可观测性
-
-**高频关键词（Go）：**
-Gin, gRPC, Protobuf, etcd, Consul, Kubernetes, Helm, Prometheus, OpenTelemetry, Kafka, Redis, TiDB, pprof, trace
-
-**高频关键词（Node.js）：**
-Express, Koa, Fastify, NestJS, Socket.io, TypeScript, Prisma, Jest, Next.js, Serverless, AWS Lambda, PM2
-
-### 架构师 / 技术管理
-
-**突出：** 技术选型与风险评估、系统设计（高可用/高并发/可扩展）、团队管理（Code Review/mentorship/梯队建设）、跨部门协作
-
-**高频关键词：**
-DDD, Microservices, Event Sourcing, CQRS, Saga, Service Mesh, Istio, K8s, Terraform, GitOps, ArgoCD, Prometheus, Grafana, ELK, OpenTelemetry, SLO, SLA, CAP, BASE, 分布式事务, 混沌工程, 容灾, 灰度发布, 技术债, 架构治理
-
----
-
-## 联系方式要点
-
-- **手机：** 外地号注明地区；经常关机写最佳联系时间
-- **邮箱：** 建议 Gmail/Outlook（部分 HR 反感 QQ 邮箱）
-- **GitHub / 博客：** 有原创 repo 或高质量文章显著提升个人品牌
-
----
-
-## ATS 策略
-
-简历可能经过机器筛选（ATS）或不懂技术的 HR 快速浏览：
-
-1. 从对应技术栈的高频关键词中选 5-10 个与自己匹配的
-2. 关键词要**自然融入**经历描述，不要堆砌在末尾
-3. 文件名用 `姓名-职位-工作年限.pdf`（不用 `.doc`，排版易错乱）
+### 强
+> "部署 OpenClaw + Firecrawl 爬虫框架，爬取质量显著提升。设计 map-clustering-reduce 架构 SOTA 分析 pipeline，支持 CVPR/ACL 顶会数据自动化分析。"

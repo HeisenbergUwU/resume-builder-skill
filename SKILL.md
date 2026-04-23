@@ -86,7 +86,7 @@ Outputs categorized file lists + JSON. Auto-selects best avatar (prefers `avatar
 
 **Supported email formats:**
 - `.eml` — standard MIME (Thunderbird, Mail.app, generic export) — no extra deps
-- `.msg` — Outlook format — needs `pip install extract-msg`
+- `.msg` — Outlook format — needs `pip install msgreader`
 - `.txt` / `.html` — plain text or HTML saved from email clients — direct read
 
 ## Step 2: Extract Text from Reports
@@ -113,7 +113,7 @@ python scripts/extract_text.py reports/ -r --json
 
 **Supported formats:**
 - `.eml` — standard MIME email — no extra deps
-- `.msg` — Outlook — needs `pip install extract-msg`
+- `.msg` — Outlook — needs `pip install msgreader`
 - `.html` / `.htm` — auto-stripped to text
 - `.txt` / `.md` / `.sg` / anything else — direct read
 
@@ -179,8 +179,7 @@ The script center-crops to a square and resizes — the avatar stays centered in
 
 | Problem | Fix |
 |---------|-----|
-| `h1` invisible — gradient + `transparent` fill | Use `color: var(--text)` directly, no gradient clip |
-| Avatar path breaks offline use | Always Base64 data URI, never external reference |
+| Avatar not embedded — script says success but no image | `embed_avatar.py` tries 5 strategies: data URI, `<div class="avatar">`, placeholder, container/body injection. If none match, the HTML structure deviates from the template — check the HTML manually. |
 | Avatar/text overlap on mobile | `flex-direction: column` + `align-items: center` below 640px |
 | CSS `:root` variables lost during template injection | Ensure `:root` block is at the top of `<style>` |
 | Duplicate/conflicting timeline data | Sort by date first, deduplicate, then extract |
