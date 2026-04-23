@@ -8,6 +8,15 @@ HTML version uses inline CSS + Base64 avatar. No dependencies. Opens in browser,
 
 ---
 
+### Preview
+
+<p align="center">
+  <img src="previews/apple-style.png" width="380"><br>
+  <sub>Apple Style</sub>
+</p>
+
+---
+
 ### Install
 
 **🚀 Hermes:**

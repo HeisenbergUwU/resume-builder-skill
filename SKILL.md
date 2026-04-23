@@ -199,6 +199,13 @@ The script center-crops to a square and resizes — the avatar stays centered in
 | Metrics | `#34a853` (green) |
 | Tags/badges | `#ff9500` (orange) |
 
+## Footer Rules (IMPORTANT)
+
+- The `<div class="footer">` at the bottom of the HTML should contain **only** a simple, clean closing — nothing more.
+- **NEVER** write things like "Based on materials...", "Generated from...", "Built from weekly reports...", or any summary of the source data.
+- **NEVER** add timestamps, watermarks, disclaimers, or attribution to the generation process.
+- If in doubt, leave the footer empty or remove it entirely. Less is always better.
+
 ## Deliverable
 
 `resume-name-final.html` — single file with inline CSS + HTML + Base64 avatar. No external dependencies, opens directly, email-safe, print-ready.
