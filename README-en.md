@@ -11,7 +11,7 @@ HTML version uses inline CSS + Base64 avatar. No dependencies. Opens in browser,
 ### Install
 
 ```bash
-git clone <repo-url> skills/resume-builder
+git clone https://github.com/HeisenbergUwU/resume-builder-skill.git skills/resume-builder
 ```
 
 ### Prompt Examples
