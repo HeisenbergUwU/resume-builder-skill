@@ -2,7 +2,7 @@
 
 [English](README-en.md)
 
-**从资料包（邮件周报、旧简历、照片等）生成精美的简历，同时输出 HTML 和 Markdown 两个版本。**
+**从资料包（邮件周报、旧简历、照片等）生成精美的简历，支持 HTML、Markdown 和 PDF 输出。**
 
 HTML 版本内联 CSS + Base64 头像，无外部依赖，浏览器直接打开，可邮件发送，可打印。
 
@@ -53,3 +53,4 @@ git clone https://github.com/HeisenbergUwU/resume-builder-skill.git skills/resum
 | 职业指南 | 计算机科学 · 人力资源 · 市场运营 |
 | 样式主题 | apple · minimal · corporate |
 | 头像处理 | 自动选取 + 居中裁剪 + Base64 嵌入 |
+| PDF 导出 | 一键从 HTML 生成 PDF，支持多种转换方式 |

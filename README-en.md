@@ -2,7 +2,7 @@
 
 [中文版](README.md)
 
-**Build a polished resume from your materials (email reports, old resumes, photos etc.), outputting both HTML and Markdown versions.**
+**Build a polished resume from your materials (email reports, old resumes, photos etc.), outputting HTML, Markdown, and PDF.**
 
 HTML version uses inline CSS + Base64 avatar. No dependencies. Opens in browser, email-safe, print-ready.
 
@@ -53,3 +53,4 @@ After installing, use in conversation:
 | Career Guides | Computer Science · Human Resources · Marketing |
 | Style Themes | apple · minimal · corporate |
 | Avatar | Auto-select + center-crop + Base64 embed |
+| PDF Export | One-click HTML-to-PDF, multiple backends supported |
