@@ -19,16 +19,28 @@ def try_weasyprint(html_path, pdf_path):
         return True
     except ImportError:
         return False
+    except Exception as e:
+        print(f"ERROR: weasyprint failed: {e}", file=sys.stderr)
+        return False
 
 
 def try_wkhtmltopdf(html_path, pdf_path):
     """Convert using wkhtmltopdf system tool."""
+    if not shutil.which('wkhtmltopdf'):
+        return False
     cmd = ['wkhtmltopdf', '--no-outline', '--margin-top', '0',
            '--margin-bottom', '0', '--margin-left', '0', '--margin-right', '0',
            html_path, pdf_path]
-    if shutil.which('wkhtmltopdf'):
-        subprocess.run(cmd, check=True, capture_output=True)
-        return True
+    try:
+        result = subprocess.run(cmd, check=True, capture_output=True, timeout=60)
+        if result.returncode == 0:
+            return True
+    except subprocess.TimeoutExpired:
+        print("ERROR: wkhtmltopdf timed out", file=sys.stderr)
+    except subprocess.CalledProcessError as e:
+        print(f"ERROR: wkhtmltopdf failed: {e.stderr.decode('utf-8', errors='replace')}", file=sys.stderr)
+    except Exception as e:
+        print(f"ERROR: wkhtmltopdf failed: {e}", file=sys.stderr)
     return False
 
 
@@ -40,8 +52,17 @@ def try_chromium(html_path, pdf_path):
     cmd = [chrome, '--headless', '--disable-gpu',
            '--print-to-pdf=' + pdf_path,
            '--no-margins', 'file://' + os.path.abspath(html_path)]
-    subprocess.run(cmd, check=True, capture_output=True)
-    return True
+    try:
+        result = subprocess.run(cmd, check=True, capture_output=True, timeout=60)
+        if result.returncode == 0:
+            return True
+    except subprocess.TimeoutExpired:
+        print("ERROR: Chromium timed out", file=sys.stderr)
+    except subprocess.CalledProcessError as e:
+        print(f"ERROR: Chromium failed: {e.stderr.decode('utf-8', errors='replace')}", file=sys.stderr)
+    except Exception as e:
+        print(f"ERROR: Chromium failed: {e}", file=sys.stderr)
+    return False
 
 
 def main():
@@ -51,12 +72,12 @@ def main():
     args = parser.parse_args()
 
     if not os.path.isfile(args.html):
-        sys.exit(f"HTML file not found: {args.html}")
+        print(f"ERROR: HTML file not found: {args.html}", file=sys.stderr)
+        sys.exit(1)
 
     pdf_path = args.output or os.path.splitext(args.html)[0] + '.pdf'
     abs_html = os.path.abspath(args.html)
 
-    # Try methods in order of preference
     methods = [
         ('weasyprint', lambda: try_weasyprint(abs_html, pdf_path)),
         ('wkhtmltopdf', lambda: try_wkhtmltopdf(abs_html, pdf_path)),

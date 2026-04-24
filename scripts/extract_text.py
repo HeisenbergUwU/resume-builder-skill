@@ -7,43 +7,58 @@ import json
 import os
 import re
 import sys
+import email.header as email_header
+
+SKIP_EXTS = {'.zip', '.tar', '.gz', '.bz2', '.xz', '.7z', '.rar', '.dmg', '.iso',
+             '.exe', '.msi', '.app', '.pkg', '.deb', '.rpm', '.jar', '.war',
+             '.jpg', '.jpeg', '.png', '.gif', '.webp', '.bmp', '.svg', '.ico',
+             '.pdf', '.doc', '.docx', '.xls', '.xlsx', '.ppt', '.pptx',
+             '.mp3', '.mp4', '.avi', '.mov', '.wav', '.flac',
+             '.woff', '.woff2', '.ttf', '.eot',
+             '.sqlite', '.db', '.pyc', '.pyo', '.class', '.o', '.so', '.dylib',
+             '__MACOSX', '.DS_Store', '.gitkeep', '.gitignore'}
+
+MAX_CONTENT_BYTES = 500_000  # ~500KB per file — attachments will be far larger
 
 
 def extract_eml(path):
     """Decode .eml (MIME email) to plain text."""
-    with open(path, 'rb') as f:
-        raw = f.read()
-    msg = email.message_from_bytes(raw)
+    if not os.path.isfile(path):
+        return f'[ERROR: File not found: {os.path.basename(path)}]'
+    try:
+        with open(path, 'rb') as f:
+            raw = f.read()
+        msg = email.message_from_bytes(raw)
 
-    lines = []
+        lines = []
 
-    # Headers — read raw bytes directly to preserve UTF-8
-    header_names = ('From', 'To', 'Subject', 'Date', 'Cc', 'Bcc')
-    raw_text = raw.decode('utf-8', errors='replace')
-    in_headers = True
-    for line in raw_text.split('\n'):
-        if not in_headers:
-            break
-        if line.strip() == '':
-            in_headers = False
-            continue
-        colon = line.find(':')
-        if colon > 0:
-            name = line[:colon].strip()
-            value = line[colon+1:].strip()
-            if name in header_names:
-                lines.append(f'{name}: {value}')
-        elif line[0] in (' ', '\t') and lines:
-            # Continuation line
-            lines[-1] += ' ' + line.strip()
+        # Headers — read raw bytes directly to preserve UTF-8
+        header_names = ('From', 'To', 'Subject', 'Date', 'Cc', 'Bcc')
+        raw_text = raw.decode('utf-8', errors='replace')
+        in_headers = True
+        for line in raw_text.split('\n'):
+            if not in_headers:
+                break
+            if line.strip() == '':
+                in_headers = False
+                continue
+            colon = line.find(':')
+            if colon > 0:
+                name = line[:colon].strip()
+                value = line[colon+1:].strip()
+                if name in header_names:
+                    lines.append(f'{name}: {value}')
+            elif line[0] in (' ', '\t') and lines:
+                lines[-1] += ' ' + line.strip()
 
-    if lines:
-        lines.append('')
+        if lines:
+            lines.append('')
 
-    # Body — walk parts and collect text
-    body = _extract_body(msg)
-    lines.append(body)
-    return '\n'.join(lines)
+        body = _extract_body(msg)
+        lines.append(body)
+        return '\n'.join(lines)
+    except Exception as e:
+        return f'[ERROR extracting {os.path.basename(path)}: {e}]'
 
 
 def _extract_body(msg):
@@ -62,21 +77,26 @@ def _extract_body(msg):
     if parts_text:
         return '\n'.join(parts_text)
 
-    # Fallback: raw payload
-    raw = msg.get_payload(decode=True)
-    if isinstance(raw, bytes):
-        charset = msg.get_content_charset() or 'utf-8'
-        return raw.decode(charset, errors='replace')
-    return str(raw or '')
+    try:
+        raw = msg.get_payload(decode=True)
+        if isinstance(raw, bytes):
+            charset = msg.get_content_charset() or 'utf-8'
+            return raw.decode(charset, errors='replace')
+        return str(raw or '')
+    except Exception:
+        return ''
 
 
 def _decode_payload(part):
     """Decode a MIME part's payload to text."""
-    payload = part.get_payload(decode=True)
-    if isinstance(payload, bytes):
-        charset = part.get_content_charset() or 'utf-8'
-        return payload.decode(charset, errors='replace')
-    return str(payload or '')
+    try:
+        payload = part.get_payload(decode=True)
+        if isinstance(payload, bytes):
+            charset = part.get_content_charset() or 'utf-8'
+            return payload.decode(charset, errors='replace')
+        return str(payload or '')
+    except Exception:
+        return ''
 
 
 def _html_to_text(html):
@@ -94,39 +114,54 @@ def _html_to_text(html):
 
 
 def extract_msg(path):
-    """Decode .msg (Outlook) to plain text. Needs extract-msg."""
+    """Decode .msg (Outlook) to plain text. Needs msgreader."""
+    if not os.path.isfile(path):
+        return f'[ERROR: File not found: {os.path.basename(path)}]'
     try:
         from msgreader import MsgReader  # noqa: F401
     except ImportError:
-        return f'[请安装依赖: pip install extract-msg]\n文件: {os.path.basename(path)}'
+        return f'[Please install dependency: pip install msgreader]\nFile: {os.path.basename(path)}'
 
-    import msgreader
-    msg = msgreader.MsgReader(path)
-    lines = []
-    if msg.subject:
-        lines.append(f'Subject: {msg.subject}')
-    if msg.date:
-        lines.append(f'Date: {msg.date}')
-    if msg.sender_name:
-        lines.append(f'From: {msg.sender_name}')
-    if lines:
-        lines.append('')
-    if msg.body:
-        lines.append(msg.body)
-    return '\n'.join(lines)
+    try:
+        import msgreader
+        msg = msgreader.MsgReader(path)
+        lines = []
+        if msg.subject:
+            lines.append(f'Subject: {msg.subject}')
+        if msg.date:
+            lines.append(f'Date: {msg.date}')
+        if msg.sender_name:
+            lines.append(f'From: {msg.sender_name}')
+        if lines:
+            lines.append('')
+        if msg.body:
+            lines.append(msg.body)
+        return '\n'.join(lines)
+    except Exception as e:
+        return f'[ERROR extracting {os.path.basename(path)}: {e}]'
 
 
 def extract_html(path):
     """Read .html/.htm and strip to plain text."""
-    with open(path, 'r', encoding='utf-8-sig', errors='replace') as f:
-        html = f.read()
-    return _html_to_text(html)
+    if not os.path.isfile(path):
+        return f'[ERROR: File not found: {os.path.basename(path)}]'
+    try:
+        with open(path, 'r', encoding='utf-8-sig', errors='replace') as f:
+            html = f.read()
+        return _html_to_text(html)
+    except Exception as e:
+        return f'[ERROR extracting {os.path.basename(path)}: {e}]'
 
 
 def extract_text(path):
     """Read any text-based file."""
-    with open(path, 'r', encoding='utf-8', errors='replace') as f:
-        return f.read().strip()
+    if not os.path.isfile(path):
+        return f'[ERROR: File not found: {os.path.basename(path)}]'
+    try:
+        with open(path, 'r', encoding='utf-8', errors='replace') as f:
+            return f.read().strip()
+    except Exception as e:
+        return f'[ERROR extracting {os.path.basename(path)}: {e}]'
 
 
 # Dispatch by extension
@@ -140,16 +175,27 @@ HANDLERS = {
 TEXT_EXTS = {'.txt', '.text', '.md', '.sg', '.log', '.csv', '.json', '.yaml', '.yml'}
 
 
+def is_skip_file(path):
+    """Check if a file should be skipped."""
+    ext = os.path.splitext(path)[1].lower()
+    basename = os.path.basename(path).lower()
+    return ext in SKIP_EXTS or basename.startswith('__') or basename in {'thumbnail', 'desktop.ini', 'thumbs.db'}
+
+
 def extract_file(path):
-    """Auto-detect format, return plain text."""
+    """Auto-detect format, return plain text or None if unsupported."""
+    if is_skip_file(path):
+        return None
     ext = os.path.splitext(path)[1].lower()
     handler = HANDLERS.get(ext)
     if handler:
         return handler(path)
     if ext in TEXT_EXTS or not ext:
-        return extract_text(path)
-    # Fallback: try as UTF-8 text
-    return extract_text(path)
+        content = extract_text(path)
+        if len(content) > MAX_CONTENT_BYTES:
+            return content[:MAX_CONTENT_BYTES] + '\n\n[... content truncated (exceeded 500KB) ...]'
+        return content
+    return None
 
 
 def main():
@@ -159,16 +205,28 @@ def main():
     parser.add_argument('source', help='File or directory')
     parser.add_argument('--json', action='store_true', help='Output as JSON array')
     parser.add_argument('-r', '--recursive', action='store_true', help='Recurse into subdirectories')
+    parser.add_argument('--output', default=None, help='Write JSON output to file instead of stdout')
     args = parser.parse_args()
 
     if os.path.isfile(args.source):
         content = extract_file(args.source)
+        entry = {'filename': os.path.basename(args.source), 'content': content}
         if args.json:
-            print(json.dumps({'filename': os.path.basename(args.source), 'content': content}, ensure_ascii=False, indent=2))
+            out = json.dumps(entry, ensure_ascii=False, indent=2)
         else:
             print(f"--- {os.path.basename(args.source)} ---")
             print(content)
+            out = None
+        if args.output and out:
+            with open(args.output, 'w', encoding='utf-8') as f:
+                f.write(out)
+        elif out:
+            print(out)
     else:
+        if not os.path.isdir(args.source):
+            print(f"ERROR: Path not found: {args.source}", file=sys.stderr)
+            sys.exit(1)
+
         entries = []
         paths = []
         if args.recursive:
@@ -183,6 +241,9 @@ def main():
 
         for p in paths:
             content = extract_file(p)
+            if content is None:
+                print(f"SKIPPED: {os.path.basename(p)} (unsupported format)", file=sys.stderr)
+                continue
             entry = {'filename': os.path.basename(p), 'content': content}
             entries.append(entry)
             if not args.json:
@@ -191,7 +252,12 @@ def main():
                 print()
 
         if args.json:
-            print(json.dumps(entries, ensure_ascii=False, indent=2))
+            out = json.dumps(entries, ensure_ascii=False, indent=2)
+            if args.output:
+                with open(args.output, 'w', encoding='utf-8') as f:
+                    f.write(out)
+            else:
+                print(out)
 
 
 if __name__ == '__main__':

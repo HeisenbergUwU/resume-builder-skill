@@ -6,11 +6,9 @@ Auto-discovers avatar from local files first, downloads a placeholder as fallbac
 
 import argparse
 import base64
-import hashlib
 import io
 import os
 import re
-import shutil
 import sys
 
 AVATAR_EXTS = ('.jpg', '.jpeg', '.png', '.webp', '.gif')
@@ -49,6 +47,8 @@ def download_placeholder_avatar(dest):
 
 def crop_and_embed(img_path, html_content, size=100):
     """Center-crop to square, resize, and replace avatar in HTML."""
+    is_svg = os.path.splitext(img_path)[1].lower() == '.svg'
+
     has_pillow = False
     try:
         from PIL import Image
@@ -56,32 +56,35 @@ def crop_and_embed(img_path, html_content, size=100):
     except ImportError:
         pass
 
-    if has_pillow:
-        img = Image.open(img_path)
-        w, h = img.size
-        side = min(w, h)
-        left = (w - side) // 2
-        top = (h - side) // 2
-        square = img.crop((left, top, left + side, top + side))
-        avatar = square.resize((size, size), Image.LANCZOS)
-        buf = io.BytesIO()
-        avatar.save(buf, format='JPEG', quality=90)
-        data_uri = "data:image/jpeg;base64," + base64.b64encode(buf.getvalue()).decode()
-    else:
-        # Fallback: read file as-is without cropping/resizing
-        with open(img_path, 'rb') as f:
-            raw = f.read()
-        ext = os.path.splitext(img_path)[1].lower()
-        mime = 'image/jpeg' if ext in ('.jpg', '.jpeg') else ('image/png' if ext == '.png' else 'image/svg+xml')
-        data_uri = f"data:{mime};base64," + base64.b64encode(raw).decode()
+    try:
+        if has_pillow and not is_svg:
+            img = Image.open(img_path)
+            img.load()  # Force load to detect corrupted images
+            w, h = img.size
+            side = min(w, h)
+            left = (w - side) // 2
+            top = (h - side) // 2
+            square = img.crop((left, top, left + side, top + side))
+            avatar = square.resize((size, size), Image.LANCZOS)
+            buf = io.BytesIO()
+            avatar.save(buf, format='JPEG', quality=90)
+            data_uri = "data:image/jpeg;base64," + base64.b64encode(buf.getvalue()).decode()
+        else:
+            with open(img_path, 'rb') as f:
+                raw = f.read()
+            ext = os.path.splitext(img_path)[1].lower()
+            mime = 'image/jpeg' if ext in ('.jpg', '.jpeg') else ('image/png' if ext == '.png' else 'image/svg+xml')
+            data_uri = f"data:{mime};base64," + base64.b64encode(raw).decode()
+    except Exception as e:
+        print(f"ERROR: Failed to process avatar image: {e}", file=sys.stderr)
+        sys.exit(1)
 
     img_tag = '<img class="avatar" src="' + data_uri + '" alt="avatar">'
 
     # Strategy 1: Replace existing data URI in <img src="data:image/...">
     old_uris = re.findall(r'src="data:image/[^"]+"', html_content)
     if old_uris:
-        # Replace the entire src="..." attribute
-        old = old_uris[0]  # e.g. src="data:image/jpeg;base64,..."
+        old = old_uris[0]
         new = 'src="' + data_uri + '"'
         html_content = html_content.replace(old, new)
         return html_content
@@ -120,17 +123,16 @@ def main():
     args = parser.parse_args()
 
     if not os.path.isfile(args.html):
-        sys.exit(f"HTML file not found: {args.html}")
+        print(f"ERROR: HTML file not found: {args.html}", file=sys.stderr)
+        sys.exit(1)
 
     # Determine avatar path
     avatar_path = args.avatar
     if not avatar_path:
-        # Auto-discover: search given dirs + html file's parent + current dir
         html_dir = os.path.dirname(os.path.abspath(args.html))
         search_dirs = args.search_dirs + [html_dir, '.']
         avatar_path = find_local_avatar(search_dirs)
 
-    # Fallback: generate placeholder SVG
     if not avatar_path or not os.path.isfile(avatar_path):
         tmp = os.path.join(os.path.dirname(os.path.abspath(args.html)), '_placeholder_avatar.svg')
         avatar_path = download_placeholder_avatar(tmp)
@@ -138,8 +140,13 @@ def main():
     else:
         print(f"Using avatar: {avatar_path}")
 
-    with open(args.html, 'r', encoding='utf-8') as f:
-        html_content = f.read()
+    try:
+        with open(args.html, 'r', encoding='utf-8') as f:
+            html_content = f.read()
+    except UnicodeDecodeError:
+        with open(args.html, 'r', encoding='utf-8', errors='replace') as f:
+            html_content = f.read()
+        print("WARNING: HTML file had encoding issues, using error replacement", file=sys.stderr)
 
     result = crop_and_embed(avatar_path, html_content, args.size)
 

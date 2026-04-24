@@ -57,10 +57,55 @@ If the user doesn't specify, default to English. This applies to every step — 
 Collect sources → Extract data → Deduplicate & merge → Draft → Render HTML → Embed avatar → Deliver
 ```
 
+### Two Execution Modes
+
+#### Mode A: Full Pipeline (Recommended)
+
+Run `pipeline.py` to automate all script steps. Manual steps (drafting, Markdown) will print TODO prompts:
+
+```bash
+# From zip
+python scripts/pipeline.py --zip "resume-sources.zip" --output-dir ./output
+
+# From directory
+python scripts/pipeline.py --dir /path/to/sources --output-dir ./output
+
+# Provide pre-built HTML to skip draft step
+python scripts/pipeline.py --dir /path/to/sources --output-dir ./output --html ./my-resume.html
+
+# Skip specific steps
+python scripts/pipeline.py --dir /path/to/sources --output-dir ./output --skip embed-avatar,html-to-pdf
+```
+
+Pipeline output flow:
+```
+[1/6] Extract & categorize sources    (AUTO)   → extracted_manifest.json
+[2/6] Extract text from files          (AUTO)   → extracted_texts.json
+[3/6] Draft resume + render HTML       (MANUAL) → read extracted_texts.json, draft, save resume-<name>-final.html
+[4/6] Crop & embed avatar              (AUTO)   → overwrites HTML with embedded avatar
+[5/6] Generate Markdown                (MANUAL) → convert HTML to resume-<name>-final.md
+[6/6] Convert HTML to PDF              (AUTO)   → resume-<name>-final.pdf
+```
+
+**Agent workflow with pipeline:**
+1. Run `pipeline.py` — it completes steps 1-2 then prints TODO for step 3
+2. Read `output_dir/extracted_texts.json` to understand source material
+3. Follow steps 3-4.6 below to draft resume content
+4. Save HTML to `output_dir/resume-<name>-final.html`
+5. Re-run pipeline with `--skip extract-sources,extract-text,draft-resume` to continue from step 4
+6. Generate Markdown (step 5)
+7. Re-run pipeline with `--skip extract-sources,extract-text,draft-resume,embed-avatar,generate-markdown` for final PDF
+
+#### Mode B: Individual Scripts
+
+Run each script manually for full control. See individual step sections below.
+
 ## Prerequisites
 
 ```bash
-pip install Pillow
+pip install Pillow          # avatar cropping (recommended)
+pip install weasyprint      # PDF generation (recommended)
+pip install msgreader       # .msg support (optional)
 ```
 
 ## Step 1: Extract and Categorize Source Data
